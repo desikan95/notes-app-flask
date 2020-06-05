@@ -1,0 +1,44 @@
+.example-card-1 {
+  /* width: 400px;  /* Or whatever */
+   /* height: 500px; /* Or whatever */
+   max-width: 400px;
+   margin: 20px;
+}
+
+.example-card-2 {
+  /* width: 400px;  /* Or whatever */
+  /* height: 200px; /* Or whatever */
+   max-width: 400px;
+   margin: 20px;
+}
+
+.example-card-3 {
+  /* width: 400px;  /* Or whatever */
+  /* height: 200px; /* Or whatever */
+   max-width: 400px;
+   margin: 20px;
+}
+
+.example-card-4 {
+  /* width: 400px;  /* Or whatever */
+  /* height: 200px; /* Or whatever */
+   max-width: 400px;
+   margin: 20px;
+}
+
+.example-card-5 {
+  /* width: 400px;  /* Or whatever */
+  /* height: 200px; /* Or whatever */
+   max-width: 400px;
+   margin: 20px;
+}
+
+.cards {
+   display:flex;
+}
+
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
