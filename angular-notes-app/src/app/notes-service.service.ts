@@ -3,18 +3,23 @@ import { Notes } from './notes';
 import { MessageService } from './message.service';
 import { SAMPLE_NOTES } from './sample-notes';
 import { Observable, of } from 'rxjs';
-
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotesServiceService {
 
-  constructor(private messageService: MessageService) { }
+  private notesUrl = 'api/notes';
+
+  constructor(
+    private http: HttpClient,
+    private messageService: MessageService
+  ) { }
 
   getNotes(): Observable<Notes[]> {
 
     this.messageService.add('Notes Service: fetched noted');
-    return of(SAMPLE_NOTES);
+    return this.http.get<Notes[]>(this.notesUrl);
   }
 }

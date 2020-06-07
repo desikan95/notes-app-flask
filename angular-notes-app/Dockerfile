@@ -2,16 +2,18 @@ FROM node:latest as node
 
 WORKDIR /app
 
-COPY package.json ./
+COPY package.json ./app/
 
-COPY . .
+COPY . /app/
 
-RUN npm install
+RUN cd /app && npm install
 
 RUN npm run build --prod
 
 FROM nginx:alpine
 
-COPY --from=node /app/dist/angular-notes-app /usr/share/nginx/html
+COPY --from=node /app/dist/angular-notes-app/. /usr/share/nginx/html
 
 EXPOSE 4200
+
+EXPOSE 80

@@ -11,9 +11,9 @@ from flask_restful import reqparse
 api = Api(app)
 
 NOTES = {
-    'note1': {'task': 'build an API'},
-    'note2': {'task': '?????'},
-    'note3': {'task': 'profit!'},
+    '1': {'task': 'build an API'},
+    '2': {'task': '?????'},
+    '3': {'task': 'profit!'},
 }
 
 
