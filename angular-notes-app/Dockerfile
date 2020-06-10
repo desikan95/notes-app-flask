@@ -14,6 +14,6 @@ FROM nginx:alpine
 
 COPY --from=node /app/dist/angular-notes-app/. /usr/share/nginx/html
 
-EXPOSE 4200
+EXPOSE 4200 49153
 
 EXPOSE 80

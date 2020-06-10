@@ -1,13 +1,15 @@
 <div class="cards">
-<mat-card class="example-cards" *ngFor="let note of notes">
+<mat-card class="example-cards" *ngFor="let note of notes ">
   <mat-card-header>
     <div mat-card-avatar class="example-header-image"></div>
     <mat-card-title>{{note.title}}</mat-card-title>
+    <button mat-mini-fab color="primary" (click)="onClickAction1(note.id)">{{action_1}}</button>
+    <button mat-mini-fab color="accent" (click)="onClickAction2(note.id)">{{action_2}}</button>
     <mat-card-subtitle>Dog Breed</mat-card-subtitle>
   </mat-card-header>
   <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
   <mat-card-content *ngIf="selectedNote===note">
-    <p>{{selectedNote.message}}</p>
+    <input class="editable" rows="5" type="textarea" (change)="updatedValue(ctrl)" value = "{{selectedNote.message}}" [attr.disabled] = "editStatus == true ? null : true " #ctrl>
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button (click)="deSelect(note)" color="primary">Collapse card content</button>

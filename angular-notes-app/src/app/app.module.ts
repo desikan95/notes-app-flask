@@ -6,16 +6,20 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { CardNotesComponent } from './card-notes/card-notes.component';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MessagesComponent } from './messages/messages.component';
 import { HttpClientModule }    from '@angular/common/http';
+import { CreateNoteComponent } from './create-note/create-note.component';
+import {MatInputModule} from '@angular/material/input';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     CardNotesComponent,
-    MessagesComponent
+    MessagesComponent,
+    CreateNoteComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +27,9 @@ import { HttpClientModule }    from '@angular/common/http';
     HttpClientModule,
     MatCardModule,
     MatButtonModule,
-    FormsModule
+    ReactiveFormsModule,
+    MatInputModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
