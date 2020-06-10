@@ -21,6 +21,8 @@ services:
       - FLASK_APP=sample_webapp.py
     ports:
       - 5000:5000
+    volumes:
+      - ./sample_webapp/:/app
 
   angular_frontend:
     build:
