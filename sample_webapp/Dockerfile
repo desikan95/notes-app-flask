@@ -4,7 +4,7 @@ WORKDIR /app
 
 ADD . /app
 
-RUN pip install -r requirements.txt
+RUN pip --default-timeout=100 install -r requirements.txt
 
 CMD flask run --host=0.0.0.0
 

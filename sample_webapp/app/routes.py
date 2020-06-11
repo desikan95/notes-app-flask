@@ -52,19 +52,28 @@ parser.add_argument('task')
 # shows a single note item and lets you delete a note item
 class Note(Resource):
     def get(self, note_id):
-        abort_if_note_doesnt_exist(note_id)
-        return NOTES[note_id]
+        print("Note id is "+note_id)
+        result=[]
+        for key,val in NOTES.items():
+            print(" Key is "+key)
+            print(" Val is ")
+            return val[int(note_id)-1]
+        return val
 
     def delete(self, note_id):
-        abort_if_note_doesnt_exist(note_id)
+        # abort_if_note_doesnt_exist(note_id)
         del NOTES[note_id]
-        return '', 204
+        return 'Deleted', 204
 
     def put(self, note_id):
         args = parser.parse_args()
-        task = {'task': args['task']}
-        NOTES[note_id] = task
-        return task, 201
+        print(" Received put request")
+        return note_id, 201
+
+    # def options (self):
+    #     return {'Allow' : 'PUT' }, 200, \
+    #     { 'Access-Control-Allow-Origin': '*', \
+    #       'Access-Control-Allow-Methods' : 'PUT,GET,POST,DELETE' }
 
 
 # noteList
@@ -75,10 +84,13 @@ class NoteList(Resource):
 
     def post(self):
         args = parser.parse_args()
-        note_id = int(max(NOTES.keys()).lstrip('note')) + 1
-        note_id = 'note%i' % note_id
-        NOTES[note_id] = {'task': args['task']}
-        return NOTES[note_id], 201
+        print("Received post request")
+        return "HELLO", 201
+
+    # def options (self):
+    #     return {'Allow' : 'PUT' }, 200, \
+    #     { 'Access-Control-Allow-Origin': '*', \
+    #       'Access-Control-Allow-Methods' : 'PUT,GET,POST,DELETE' }
 
 ##
 ## Actually setup the Api resource routing here

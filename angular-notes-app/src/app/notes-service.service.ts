@@ -21,10 +21,10 @@ export class NotesServiceService {
 
   httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': '*',
-    'Access-Control-Allow-Headers': '*'
+    'Content-Type': 'application/json'
+    // 'Access-Control-Allow-Origin': '*',
+    // 'Access-Control-Allow-Methods': '*',
+    // 'Access-Control-Allow-Headers': '*'
   })
 }
 
@@ -43,8 +43,9 @@ export class NotesServiceService {
   }
 
   updateNote(note: Notes): Observable<Notes> {
-
-     return this.http.put<Notes>('http://127.0.0.1/api/notes', note, this.httpOptions);
+     const put_url = 'http://127.0.0.1/api/notes/'+note.id;
+     console.log("going to hit "+put_url+" for editing stuff ");
+     return this.http.put<Notes>(put_url, note, this.httpOptions);
   }
 
   deleteNote(id: Number): Observable<Notes> {
