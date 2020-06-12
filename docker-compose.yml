@@ -16,21 +16,39 @@ services:
   sample_webapp:
     build: ./sample_webapp
     container_name: flask-backend
+    depends_on:
+      - postgres_db
     restart: always
     environment:
       - FLASK_APP=sample_webapp.py
       - FLASK_ENV=development
+      - DBUSER=user
+      - DBPASS=pass
+      - DBHOST=pg_db
+      - DBNAME=postgres
+    entrypoint: /app/app/entrypoint.sh
     ports:
       - 5000:5000
     volumes:
       - ./sample_webapp/:/app
 
-  angular_frontend:
-    build:
-      context: ./angular-notes-app/
-      dockerfile: Dockerfile
+  # angular_frontend:
+  #   build:
+  #     context: ./angular-notes-app/
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - 4200:4200
+  #     - 4500:80
+  #   volumes:
+  #     - ./angular-notes-app/:/app
+
+  postgres_db:
+    image: postgres:9.4
+    container_name: pg_db
+    restart: always
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_DB=db
+      - POSTGRES_PASSWORD=pass
     ports:
-      - 4200:4200
-      - 4500:80
-    volumes:
-      - ./angular-notes-app/:/app
+     - 5432:5432

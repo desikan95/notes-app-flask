@@ -20,7 +20,7 @@ export class CreateNoteComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,private notesService: NotesServiceService, private router: Router)
   {
     this.messageForm = this.formBuilder.group({
-      title: ['',Validators.required],
+      topic: ['',Validators.required],
       contents: ['',Validators.required],
       id: ['',Validators.required]
     });

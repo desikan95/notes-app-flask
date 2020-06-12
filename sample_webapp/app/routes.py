@@ -7,6 +7,10 @@ from app import app
 
 from flask_restful import Resource, Api
 from flask_restful import reqparse
+from flask import jsonify, request
+from .models import Notes
+from . import db
+import json
 
 api = Api(app)
 
@@ -45,24 +49,33 @@ def abort_if_note_doesnt_exist(id):
         abort(404, message="note {} doesn't exist".format(id))
 
 parser = reqparse.RequestParser()
-parser.add_argument('task')
+parser.add_argument('id')
+parser.add_argument('topic')
+parser.add_argument('contents')
 
 
 # note
 # shows a single note item and lets you delete a note item
 class Note(Resource):
     def get(self, note_id):
-        print("Note id is "+note_id)
+        note_result = Notes.query.get(note_id)
+        print("Get/ID results")
+        print("ID: ",note_result.id," Topic: ",note_result.topic," Contents:",note_result.contents)
+        print("Note id in get request is ",note_id)
         result=[]
-        for key,val in NOTES.items():
-            print(" Key is "+key)
-            print(" Val is ")
-            return val[int(note_id)-1]
-        return val
+        # for key,val in NOTES.items():
+        #     print(" Key is "+key)
+        #     print(" Val is ")
+        #     return val[int(note_id)-1]
+        return json.dumps(note_result.serialize() )
 
     def delete(self, note_id):
         # abort_if_note_doesnt_exist(note_id)
-        del NOTES[note_id]
+        print("Received delete request for ",note_id)
+        obj = Notes.query.filter_by(id=int(note_id)).one()
+        db.session.delete(obj)
+        db.session.commit()
+
         return 'Deleted', 204
 
     def put(self, note_id):
@@ -80,11 +93,17 @@ class Note(Resource):
 # shows a list of all notes, and lets you POST to add new tasks
 class NoteList(Resource):
     def get(self):
-        return NOTES
+        note_db_results = Notes.query.all()
+        return json.dumps(Notes.serialize_list(note_db_results))
+        #return NOTES
 
     def post(self):
         args = parser.parse_args()
-        print("Received post request")
+        print("Received post request",args)
+        new_note = Notes(id=int(args['id']),topic=args['topic'], contents=args['contents'])
+        print(" Object to be added : ", new_note)
+        db.session.add(new_note)
+        db.session.commit()
         return "HELLO", 201
 
     # def options (self):

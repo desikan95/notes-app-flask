@@ -31,11 +31,13 @@ export class NotesServiceService {
   getNotes(): Observable<Notes[]> {
 
     this.messageService.add('Notes Service: fetched noted');
-    return this.http.get<Notes[]>('http://127.0.0.1/api/notes').pipe(
-       map(res => res['notes'] || [])
-    );
+    return this.http.get<Notes[]>('http://127.0.0.1/api/notes');//.pipe(
+  //       map(res =>  JSON.parse(res.slice(1,-1))
+    //       //res['notes'] || [])
+    //)
 
-    }
+  //);
+}
 
 
   addNote(note: Notes): Observable<Notes> {
@@ -50,6 +52,7 @@ export class NotesServiceService {
 
   deleteNote(id: Number): Observable<Notes> {
     const url = 'http://127.0.0.1/api/notes/'+id;
+    console.log("going to hit "+url+" for deleting stuff ");
     return this.http.delete<Notes>(url, this.httpOptions);
   }
 

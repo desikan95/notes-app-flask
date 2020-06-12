@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { Notes } from '../notes';
 import {NotesServiceService} from '../notes-service.service';
 import { MessageService } from '../message.service';
+import { Observable} from 'rxjs';
+
+  declare var angular: any;
 
 @Component({
   selector: 'app-card-notes',
@@ -18,6 +21,8 @@ export class CardNotesComponent implements OnInit {
   action_1: string;
   action_2: string;
   temp_message: string;
+  nothing_to_any: any;
+
 
   selectedNote: Notes;
   onSelect(note: Notes): void {
@@ -34,17 +39,25 @@ export class CardNotesComponent implements OnInit {
   //  this.notes = this.notesService.getNotes();
 
     this.notesService.getNotes()
-      .subscribe(data => {
-                    this.notes = data;
-                    console.log("Created "+data)
-                    //this.notes = Array.of(this.notes);
-      },
-      () => console.log("done"));
+      .subscribe(data =>{
+                  //  this.notes = data.json();
+                      console.log("Received ",data);
+                //      var new_str = data.slice(1, -1);
+                      this.notes =data;
+
+                    //  this.nothing_to_any = JSON.parse(data);
+                    //  console.log(" NOthing to any : ",this.nothing_to_any);
+                //    this.noteob = Observable.from(data).toArray();
+                      //this.notes = Array.of(this.notes);
+      }
+    );
+
+    console.log(" Te value of this.notes : "+this.notes)
   }
 
   updatedValue(elem: HTMLInputElement): void {
     console.log(elem.value+" is the updated value");
-    this.selectedNote.message = elem.value;
+    this.selectedNote.contents = elem.value;
   }
 
   onClickAction1(id: number): void {
@@ -62,7 +75,7 @@ export class CardNotesComponent implements OnInit {
     else
     {
         console.log("Need to save now");
-        console.log("Edited message is "+this.selectedNote.message);
+        console.log("Edited message is "+this.selectedNote.contents);
         this.notesService.updateNote(this.selectedNote).subscribe(
           data => {
             console.log("This is what returned after put"+data);

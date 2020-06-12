@@ -1,5 +1,5 @@
 export interface Notes {
   id: number;
-  message: string;
-  title: string;
+  contents: string;
+  topic: string;
 }

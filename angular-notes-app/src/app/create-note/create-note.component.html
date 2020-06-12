@@ -5,7 +5,7 @@
   </label>
   <p></p>
   <label>
-      Note Title: <input type="text" formControlName="title">
+      Note Title: <input type="text" formControlName="topic">
   </label>
   <p></p>
   <label>
@@ -17,7 +17,7 @@
 </form>
 
 <div *ngIf="submitted">
-  <p>{{messageForm.controls.title.value}}</p>
+  <p>{{messageForm.controls.topic.value}}</p>
   <p>{{messageForm.controls.contents.value}}</p>
   <p>{{messageForm.controls.id.value}}</p>
 </div>
