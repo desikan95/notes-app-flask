@@ -1,20 +1,39 @@
-<form [formGroup]="messageForm" (ngSubmit)="onSubmit()">
-  <h5 *ngIf="success">Your form is valid</h5>
-  <label>
-      Note ID: <input type="number" formControlName="id">
-  </label>
-  <p></p>
-  <label>
-      Note Title: <input type="text" formControlName="topic">
-  </label>
-  <p></p>
-  <label>
-      Note Contents: <input type="textarea" formControlName="contents">
-  </label>
 
-  <input type="submit" value="sendmessage">
+<mat-card  class="form-card">
+  <mat-card-header >
+    <mat-card-title>New Note</mat-card-title>
+  </mat-card-header>
+    <form [formGroup]="messageForm" (ngSubmit)="onSubmit()">
+  <mat-card-content>
 
-</form>
+      <mat-form-field>
+      <mat-label></mat-label>
+          Note ID: <input type="number" formControlName="id" matInput>
+
+      </mat-form-field>
+      <p></p>
+      <mat-form-field>
+      <!-- <label> -->
+          Note Title: <input type="text" formControlName="topic" matInput>
+      <!-- </label> -->
+      </mat-form-field>
+      <p></p>
+      <mat-form-field>
+      <!-- <label> -->
+          Note Contents: <input type="textarea" formControlName="contents" matInput>
+      <!-- </label> -->
+      </mat-form-field>
+
+      <!-- <input type="submit" value="sendmessage"> -->
+      
+
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button type="submit" color="primary">Create Note</button>
+    <!-- <button mat-raised-button (click)="onSelect(note)" color="accent">Uncollapse card content</button> -->
+  </mat-card-actions>
+      </form>
+</mat-card>
 
 <div *ngIf="submitted">
   <p>{{messageForm.controls.topic.value}}</p>

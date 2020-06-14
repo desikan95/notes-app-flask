@@ -31,7 +31,7 @@ services:
       - 5000:5000
     volumes:
       - ./sample_webapp/:/app
-
+  # 
   # angular_frontend:
   #   build:
   #     context: ./angular-notes-app/
@@ -52,3 +52,23 @@ services:
       - POSTGRES_PASSWORD=pass
     ports:
      - 5432:5432
+
+  rabbit:
+    hostname: rabbit
+    image: rabbitmq:management
+    environment:
+      - RABBITMQ_DEFAULT_USER=rabbitmq
+      - RABBITMQ_DEFAULT_PASS=rabbitmq
+    ports:
+      - 5673:5672
+      - 15672:15672
+
+  worker:
+    container_name: worker_container
+    restart: always
+    build: ./sample_webapp
+    depends_on:
+      - rabbit
+    volumes:
+      - ./sample_webapp:/sample_webapp
+    command: celery -A celery_task.celery worker --loglevel=info

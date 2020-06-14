@@ -22,6 +22,7 @@ export class CardNotesComponent implements OnInit {
   action_2: string;
   temp_message: string;
   nothing_to_any: any;
+  visible_status= true;
 
 
   selectedNote: Notes;
@@ -84,6 +85,8 @@ export class CardNotesComponent implements OnInit {
         );
         this.action_1 = 'edit';
         this.action_2 = 'del';
+
+      //  this.ngOnInit();
     }
   }
 
@@ -91,15 +94,19 @@ export class CardNotesComponent implements OnInit {
 
     if(this.action_2 == 'del')
     {
-
+          this.visible_status = false;
         console.log("Need to delete note "+id);
 
         this.notesService.deleteNote(id).subscribe(
           data => {
             console.log("This is what returned after delete"+data);
+            this.ngOnInit();
           },
           () => console.log("Deleted successfully")
         );
+
+
+
 
     }
     else
@@ -115,6 +122,7 @@ export class CardNotesComponent implements OnInit {
     this.textStyle = 'editable';
     this.action_1 = 'edit';
     this.action_2 = 'del';
+    this.visible_status = true;
   }
 
 }

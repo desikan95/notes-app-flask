@@ -10,6 +10,7 @@ from flask_restful import reqparse
 from flask import jsonify, request
 from .models import Notes
 from . import db
+from celery_task import dump_to_file
 import json
 
 api = Api(app)
@@ -67,7 +68,7 @@ class Note(Resource):
         #     print(" Key is "+key)
         #     print(" Val is ")
         #     return val[int(note_id)-1]
-        return json.dumps(note_result.serialize() )
+        return note_result.serialize()
 
     def delete(self, note_id):
         # abort_if_note_doesnt_exist(note_id)
@@ -81,7 +82,13 @@ class Note(Resource):
     def put(self, note_id):
         args = parser.parse_args()
         print(" Received put request")
-        return note_id, 201
+        note_result = Notes.query.get(note_id)
+        note_result.topic = args['topic']
+        note_result.contents = args['contents']
+        db.session.commit()
+        #updated_note = Notes(id=int(args['id']),topic=args['topic'], contents=args['contents'])
+        #print(" Updated object is ",updated_note)
+        return 'Edited', 201
 
     # def options (self):
     #     return {'Allow' : 'PUT' }, 200, \
@@ -94,7 +101,11 @@ class Note(Resource):
 class NoteList(Resource):
     def get(self):
         note_db_results = Notes.query.all()
-        return json.dumps(Notes.serialize_list(note_db_results))
+        sep_obj = note_db_results
+        # celery_result = dump_to_file.delay(Notes.serialize_list(sep_obj))
+        # print(" RECEIVED CELERY RESULT : ",celery_result)
+
+        return Notes.serialize_list(note_db_results)
         #return NOTES
 
     def post(self):
@@ -104,6 +115,8 @@ class NoteList(Resource):
         print(" Object to be added : ", new_note)
         db.session.add(new_note)
         db.session.commit()
+        celery_result = dump_to_file.delay(new_note.serialize())
+        print(" RECEIVED CELERY RESULT : ",celery_result)
         return "HELLO", 201
 
     # def options (self):
